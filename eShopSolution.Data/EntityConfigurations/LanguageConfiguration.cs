@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MySql.Data.EntityFrameworkCore.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,7 +14,7 @@ namespace eShopSolution.Data.Entities
             builder.ToTable("Languages");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).IsRequired().IsUnicode(false).HasMaxLength(5);
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(20);
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(20).ForMySQLHasCharset("utf8");
         }
     }
 }

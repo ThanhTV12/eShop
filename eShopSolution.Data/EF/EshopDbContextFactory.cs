@@ -18,7 +18,8 @@ namespace eShopSolution.Data.EF
                 .Build();
             var connectionString = configuration.GetConnectionString("eShopSolutionDb");
             var optionsBuilder = new DbContextOptionsBuilder<EShopDbContext>();
-            optionsBuilder.UseSqlServer(connectionString);
+            // optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseMySQL("server=localhost; port=3306; database=eShop; user=root; password=localhost; CharSet=utf8;");
             return new EShopDbContext(optionsBuilder.Options);
         }
     }

@@ -1,6 +1,7 @@
 ﻿using eShopSolution.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MySql.Data.EntityFrameworkCore.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,11 +17,11 @@ namespace eShopSolution.Data.EntityConfigurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).UseIdentityColumn();
 
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(200);
+            builder.Property(x => x.Name).IsRequired().HasMaxLength(200).ForMySQLHasCharset("utf8");
 
-            builder.Property(x => x.SeoAlias).IsRequired().HasMaxLength(200);
+            builder.Property(x => x.SeoAlias).IsRequired().HasMaxLength(200).ForMySQLHasCharset("utf8");
 
-            builder.Property(x => x.Details).HasMaxLength(500);
+            builder.Property(x => x.Details).HasMaxLength(500).ForMySQLHasCharset("utf8");
 
 
             builder.Property(x => x.LanguageId).IsUnicode(false).IsRequired().HasMaxLength(5);

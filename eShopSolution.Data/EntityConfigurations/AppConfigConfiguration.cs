@@ -1,6 +1,7 @@
 ﻿using eShopSolution.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MySql.Data.EntityFrameworkCore.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;

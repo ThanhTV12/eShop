@@ -4,11 +4,12 @@ using eShopSolution.Data.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using MySql.Data.EntityFrameworkCore.Extensions;
 using System;
 
 namespace eShopSolution.Data.EF
 {
-    public class EShopDbContext : IdentityDbContext<AppUser, AppRole, Guid>
+    public class EShopDbContext : IdentityDbContext<AppUser, AppRole, string>
     {
         public EShopDbContext(DbContextOptions options) : base(options)
         {
@@ -38,12 +39,20 @@ namespace eShopSolution.Data.EF
 
             modelBuilder.ApplyConfiguration(new TransactionConfiguration());
 
-            modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("AppUserClaims");
-            modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("AppUserRoles").HasKey(x => new { x.UserId, x.RoleId });
-            modelBuilder.Entity<IdentityUserLogin<Guid>>().ToTable("AppUserLogins").HasKey(x => x.UserId);
-
-            modelBuilder.Entity<IdentityRoleClaim<Guid>>().ToTable("AppRoleClaims");
-            modelBuilder.Entity<IdentityUserToken<Guid>>().ToTable("AppUserTokens").HasKey(x => x.UserId);
+            modelBuilder.Entity<IdentityUserClaim<string>>()
+                .ToTable("AppUserClaims");
+            modelBuilder.Entity<IdentityUserRole<string>>()
+                .ToTable("AppUserRoles")
+                .HasKey(x => new { x.UserId, x.RoleId });
+            modelBuilder.Entity<IdentityUserLogin<string>>()
+                .ToTable("AppUserLogins")
+                .HasKey(x => x.UserId);
+            modelBuilder.Entity<IdentityRoleClaim<string>>()
+                .ToTable("AppRoleClaims")
+                .HasKey(x => x.Id);
+            modelBuilder.Entity<IdentityUserToken<string>>()
+                .ToTable("AppUserTokens")
+                .HasKey(x => x.UserId);
 
             modelBuilder.Seed();
         }
