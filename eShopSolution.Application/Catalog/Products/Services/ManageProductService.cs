@@ -84,9 +84,35 @@ namespace eShopSolution.Application.Catalog.Products.Services
             return await _context.SaveChangesAsync();
         }
 
-        public Task<List<ProductViewModel>> GetAll()
+        public async Task<List<ProductViewModel>> GetAll()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("start funtion");
+            var query = from p in _context.Products
+                        join pt in _context.ProductTranslations on p.Id equals pt.ProductId
+                        select new { p, pt };
+            var data = await query.Skip(0).Take(10).Select(x => new ProductViewModel()
+                    {
+                        Id = x.p.Id,
+                        Price = x.p.Price,
+                        OriginalPrice = x.p.OriginalPrice,
+                        Stock = x.p.Stock,
+                        ViewCount = x.p.ViewCount,
+                        DateCreated = x.p.DateCreated,
+                        Name = x.pt.Name,
+                        Description = x.pt.Description,
+                        Details = x.pt.Details,
+                        SeoDescription = x.pt.SeoDescription,
+                        SeoTitle = x.pt.SeoTitle,
+                        SeoAlias = x.pt.SeoAlias,
+                        LanguageId = x.pt.LanguageId
+                    }).ToListAsync();
+            Console.WriteLine("end funtion");
+            return data;
+        }
+
+        public List<Product> GetAll2()
+        {
+            return _context.Products.ToList();
         }
 
         public async Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)

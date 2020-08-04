@@ -90,6 +90,31 @@ namespace eShopSolution.Data.Extensions
                 ViewCount = 0,
             });
 
+
+            modelBuilder.Entity<ProductTranslation>().HasData(
+                new ProductTranslation()
+                {
+                    Id = 1,
+                    ProductId = 1,
+                    Name = "Áo Nam",
+                    Description = "Áo Nam mua hè",
+                    Details = "Áo Nam mua hè 2020",
+                    SeoAlias = "ao_nam",
+                    LanguageId = "vi-VN"
+                },
+                new ProductTranslation()
+                {
+                    Id = 2,
+                    ProductId = 1,
+                    Name = "Men Shirt",
+                    Description = "Men Shirt For Summer",
+                    Details = "Men Shirt For Summer 2020",
+                    SeoAlias = "men_shirt",
+                    LanguageId = "en-US"
+                }
+
+            );
+
             modelBuilder.Entity<ProductInCategory>().HasData(
                new ProductInCategory() { ProductId = 1, CategoryId = 1 }
             );

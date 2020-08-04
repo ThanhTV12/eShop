@@ -2,9 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using eShopSolution.Application.Catalog.Products.Services;
+using eShopSolution.Application.Common;
+using eShopSolution.Data.EF;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +28,10 @@ namespace eShopSolution.BackendApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<EShopDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("eShopSolutionDb")));
+            services.AddTransient<IStorageService, FileStorageService>();
+            services.AddTransient<IManageProductService, ManageProductService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

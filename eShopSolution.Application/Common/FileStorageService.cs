@@ -1,11 +1,6 @@
-using System;
-using System.Data.SqlTypes;
+using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Threading.Tasks;
-using eShopSolution.ViewModel.Catalog.Product;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Net.Http.Headers;
 
 namespace eShopSolution.Application.Common
 {
