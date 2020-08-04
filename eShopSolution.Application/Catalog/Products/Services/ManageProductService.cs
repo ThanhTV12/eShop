@@ -3,21 +3,27 @@ using eShopSolution.Data.Entities;
 using eShopSolution.Utilities.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
+using eShopSolution.Application.Common;
 using Microsoft.EntityFrameworkCore;
 using eShopSolution.ViewModel.Catalog.Product;
 using eShopSolution.ViewModel.Common;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Net.Http.Headers;
 
 namespace eShopSolution.Application.Catalog.Products.Services
 {
     public class ManageProductService : IManageProductService
     {
         private readonly EShopDbContext _context;
+        private readonly IStorageService _storageService;
 
-        public ManageProductService(EShopDbContext context)
+        public ManageProductService(EShopDbContext context, IStorageService storageService)
         {
             _context = context;
+            _storageService = storageService;
         }
 
         public async Task AddViewCount(int productId)
@@ -50,7 +56,20 @@ namespace eShopSolution.Application.Catalog.Products.Services
                     }
                 }
             };
-            _context.Products.Add(product);
+            await _context.Products.AddAsync(product);
+            if (request.ThumbnailImage != null)
+            {
+                var image = new ProductImage()
+                {
+                    Caption = request.Name + "_" + DateTime.Now,
+                    DateCreated = DateTime.Now,
+                    IsDefault = true,
+                    SortOrder = 0,
+                    FileSize = request.ThumbnailImage.Length,
+                    ImagePath = await SaveFileAsync(request.ThumbnailImage)
+                };
+                await _context.ProductImages.AddAsync(image);
+            }
             return await _context.SaveChangesAsync();
         }
 
@@ -147,6 +166,15 @@ namespace eShopSolution.Application.Catalog.Products.Services
             }
             product.Stock += addedQuantity;
             return await _context.SaveChangesAsync() > 0;
+        }
+
+        private async Task<string> SaveFileAsync(IFormFile file)
+        {
+            var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition)
+                .FileName.Trim();
+            var fileName = Guid.NewGuid().ToString() + originalFileName.ToString();
+            await _storageService.SaveFileAsync(file.OpenReadStream(), fileName);
+            return fileName;
         }
     }
 }
