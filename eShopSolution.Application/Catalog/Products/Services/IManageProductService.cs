@@ -1,10 +1,7 @@
-﻿using eShopSolution.Application.Catalog.Products.Dtos;
-using eShopSolution.Application.Catalog.Products.Dtos.Manage;
-using eShopSolution.Application.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using eShopSolution.ViewModel.Catalog.Product;
+using eShopSolution.ViewModel.Common;
 
 namespace eShopSolution.Application.Catalog.Products.Services
 {
@@ -17,6 +14,6 @@ namespace eShopSolution.Application.Catalog.Products.Services
         Task AddViewCount(int productId);
         Task<bool> updateStock(int productId, int addedQuantity);
         Task<List<ProductViewModel>> GetAll();
-        Task<PagedResult<ProductViewModel>> GetAllPaging(GetProductPagingRequest request);
+        Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
     }
 }

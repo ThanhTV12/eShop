@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
-namespace eShopSolution.Application.Dtos
+namespace eShopSolution.ViewModel.Common
 {
     public class PagedResult<T>
     {
