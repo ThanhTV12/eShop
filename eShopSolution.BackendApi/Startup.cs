@@ -28,10 +28,13 @@ namespace eShopSolution.BackendApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<EShopDbContext>(options =>
+            services.AddDbContextPool<EShopDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("eShopSolutionDb")));
-            services.AddTransient<IStorageService, FileStorageService>();
-            services.AddTransient<IManageProductService, ManageProductService>();
+            services.AddScoped<IStorageService, FileStorageService>();
+            services.AddScoped<IManageProductService, ManageProductService>();
+            
+            // Register the Swagger generator, defining 1 or more Swagger documents
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,6 +63,16 @@ namespace eShopSolution.BackendApi
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+            
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+            
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
         }
     }

@@ -11,4 +11,8 @@
       <ProjectReference Include="..\eShopSolution.ViewModel\eShopSolution.ViewModel.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
+    </ItemGroup>
+
 </Project>

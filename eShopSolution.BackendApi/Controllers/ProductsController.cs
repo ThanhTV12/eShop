@@ -21,19 +21,9 @@ namespace eShopSolution.BackendApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll() 
+        public async Task<IActionResult> GetAll() 
         {
-            var products = new List<eShopSolution.ViewModel.Catalog.Product.ProductViewModel>();
-            Console.WriteLine("before");
-            _manageProductService.GetAll();
-            Console.WriteLine("After");
-            return Ok("hello");
-        }
-
-        [HttpGet("/Get2")]
-        public IActionResult GetAll2()
-        {
-            var products = _manageProductService.GetAll2();
+            var products = await _manageProductService.GetAll();
             return Ok(products);
         }
     }
