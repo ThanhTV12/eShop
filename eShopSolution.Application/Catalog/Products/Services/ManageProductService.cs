@@ -56,21 +56,25 @@ namespace eShopSolution.Application.Catalog.Products.Services
                     }
                 }
             };
-            await _context.Products.AddAsync(product);
+            
             if (request.ThumbnailImage != null)
             {
-                var image = new ProductImage()
+                product.ProductImages = new List<ProductImage>()
                 {
-                    Caption = request.Name + "_" + DateTime.Now,
-                    DateCreated = DateTime.Now,
-                    IsDefault = true,
-                    SortOrder = 0,
-                    FileSize = request.ThumbnailImage.Length,
-                    ImagePath = await SaveFileAsync(request.ThumbnailImage)
+                    new ProductImage()
+                    {
+                        Caption = request.Name + "_" + DateTime.Now,
+                        DateCreated = DateTime.Now,
+                        IsDefault = true,
+                        SortOrder = 0,
+                        FileSize = request.ThumbnailImage.Length,
+                        ImagePath = await SaveFileAsync(request.ThumbnailImage)
+                    }
                 };
-                await _context.ProductImages.AddAsync(image);
             }
-            return await _context.SaveChangesAsync();
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
+            return product.Id;
         }
 
         public async Task<int> Delete(int productId)
@@ -115,6 +119,36 @@ namespace eShopSolution.Application.Catalog.Products.Services
             return _context.Products.ToList();
         }
 
+        public async Task<ProductViewModel> GetById(int productId, string languageId)
+        {
+            var product = await _context.Products.FindAsync(productId);
+            var productTranslation = await _context.ProductTranslations
+                .FirstOrDefaultAsync(x => x.LanguageId == languageId 
+                                     && x.ProductId == productId);
+            if (product == null)
+            {
+                return ProductViewModel.GetEmpty();
+            }
+
+            var productVm = new ProductViewModel()
+            {
+                Id = product.Id,
+                DateCreated = product.DateCreated,
+                Description = productTranslation?.Description,
+                LanguageId = productTranslation?.LanguageId,
+                Details = productTranslation?.Details,
+                Name = productTranslation?.Name,
+                OriginalPrice = product.OriginalPrice,
+                Price = product.Price,
+                SeoAlias = productTranslation?.SeoAlias,
+                SeoDescription = productTranslation?.SeoDescription,
+                SeoTitle = productTranslation?.SeoTitle,
+                Stock = product.Stock,
+                ViewCount = product.ViewCount
+            };
+            return productVm;
+        }
+
         public async Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request)
         {
             var query = from p in _context.Products
@@ -156,20 +190,21 @@ namespace eShopSolution.Application.Catalog.Products.Services
         public async Task<int> Update(ProductUpdateRequest request)
         {
             var product = await _context.Products.FindAsync(request.Id);
-            var productTransalation = await _context.ProductTranslations
+            var productTranslation = await _context.ProductTranslations
                 .FirstOrDefaultAsync(x => x.ProductId == request.Id 
                                     && x.LanguageId == request.LanguageId);
-            if (product == null || productTransalation == null) 
+            if (product == null || productTranslation == null) 
             {
                 throw new EShopException($"Can't found product by Id: {request.Id}");
             }
-            productTransalation.Name = request.Name;
-            productTransalation.Description = request.Description;
-            productTransalation.Details = request.Details;
-            productTransalation.SeoDescription = request.SeoDescription;
-            productTransalation.SeoTitle = request.SeoTitle;
-            productTransalation.SeoAlias = request.SeoAlias;
-            return await _context.SaveChangesAsync();
+            productTranslation.Name = request.Name;
+            productTranslation.Description = request.Description;
+            productTranslation.Details = request.Details;
+            productTranslation.SeoDescription = request.SeoDescription;
+            productTranslation.SeoTitle = request.SeoTitle;
+            productTranslation.SeoAlias = request.SeoAlias;
+            await _context.SaveChangesAsync();
+            return product.Id;
         }
 
         public async Task<bool> updatePrice(int productId, decimal newPrice)

@@ -8,7 +8,7 @@ namespace eShopSolution.Application.Catalog.Products.Services
 {
     public interface IManageProductService
     {
-        Task<int> Create(ProductCreateRequest request);
+        public Task<int> Create(ProductCreateRequest request);
         Task<int> Update(ProductUpdateRequest request);
         Task<int> Delete(int productId);
         Task<bool> updatePrice(int productId, decimal newPrice);
@@ -16,6 +16,7 @@ namespace eShopSolution.Application.Catalog.Products.Services
         Task<bool> updateStock(int productId, int addedQuantity);
         Task<List<ProductViewModel>> GetAll();
         public List<Product> GetAll2();
+        public Task<ProductViewModel> GetById(int productId, string languageId);
         Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
     }
 }

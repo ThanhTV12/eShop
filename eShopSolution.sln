@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30320.27
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.WebApp", "eShopSolution.WebApp\eShopSolution.WebApp.csproj", "{AF162696-96BF-48D1-B2C9-B4798FED7CD1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C7F298E0-7387-4D08-82BF-5AE86851AC16}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0. Solution Items", "0. Solution Items", "{C7F298E0-7387-4D08-82BF-5AE86851AC16}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
@@ -19,6 +19,12 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.ViewModel", "eShopSolution.ViewModel\eShopSolution.ViewModel.csproj", "{6B3DF1F8-FE9E-4372-8206-76B9D3EA9BE4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.BackendApi", "eShopSolution.BackendApi\eShopSolution.BackendApi.csproj", "{5C6E1AE2-0E66-4608-B174-A4B9EF1833D3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Infrastructure", "1. Infrastructure", "{B8A749C9-0A1C-4E40-A4CD-8B4AEE50BCB4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domain", "2. Domain", "{FD918349-831C-4C49-834D-D520F79C6EA8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Host", "3. Host", "{1341FFF0-0D1E-4644-9A88-EE38267ED425}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,5 +62,13 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E1B87C55-3EAC-4592-87F6-530AC149997C}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{63C8B35F-E9EC-441D-B747-0C6D3356F576} = {B8A749C9-0A1C-4E40-A4CD-8B4AEE50BCB4}
+		{6B3DF1F8-FE9E-4372-8206-76B9D3EA9BE4} = {B8A749C9-0A1C-4E40-A4CD-8B4AEE50BCB4}
+		{2151414F-F793-476F-B84E-89271EC2A881} = {FD918349-831C-4C49-834D-D520F79C6EA8}
+		{360DA000-0BC9-4904-B65A-9FF379B7F8F6} = {FD918349-831C-4C49-834D-D520F79C6EA8}
+		{5C6E1AE2-0E66-4608-B174-A4B9EF1833D3} = {1341FFF0-0D1E-4644-9A88-EE38267ED425}
+		{AF162696-96BF-48D1-B2C9-B4798FED7CD1} = {1341FFF0-0D1E-4644-9A88-EE38267ED425}
 	EndGlobalSection
 EndGlobal

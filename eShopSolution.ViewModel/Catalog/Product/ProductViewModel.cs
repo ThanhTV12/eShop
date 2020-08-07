@@ -9,7 +9,7 @@ namespace eShopSolution.ViewModel.Catalog.Product
         public decimal OriginalPrice { set; get; }
         public int Stock { set; get; }
         public int ViewCount { set; get; }
-        public DateTime DateCreated { set; get; }
+        public DateTime? DateCreated { set; get; }
 
         public string Name { set; get; }
         public string Description { set; get; }
@@ -19,5 +19,11 @@ namespace eShopSolution.ViewModel.Catalog.Product
 
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
+
+        private static ProductViewModel EmptyInstante = new ProductViewModel();
+        public static ProductViewModel GetEmpty()
+        {
+            return EmptyInstante;
+        }
     }
 }
