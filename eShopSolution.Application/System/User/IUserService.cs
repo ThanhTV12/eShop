@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using eShopSolution.Utilities.Exceptions;
 using eShopSolution.ViewModel.System.User;
 
 namespace eShopSolution.Application.System.User
